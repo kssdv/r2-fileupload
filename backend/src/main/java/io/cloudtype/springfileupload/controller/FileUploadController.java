@@ -36,9 +36,10 @@ public class FileUploadController {
 
     @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws AmazonS3Exception{
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(new InputStreamResource(fileUploadService.getFile(fileName).getObjectContent()));
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                .body(new InputStreamResource(fileUploadService.getFile(fileName).getObjectContent()));
     }
 
 }
