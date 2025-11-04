@@ -35,11 +35,12 @@ public class FileUploadController {
     }
 
     @GetMapping("/download/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws AmazonS3Exception{
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws AmazonS3Exception, UnsupportedEncodingException {
+        String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+        
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName)
                 .body(new InputStreamResource(fileUploadService.getFile(fileName).getObjectContent()));
     }
-
 }
