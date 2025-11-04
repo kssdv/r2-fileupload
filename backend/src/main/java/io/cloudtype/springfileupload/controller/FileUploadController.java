@@ -1,5 +1,7 @@
 package io.cloudtype.springfileupload.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import io.cloudtype.springfileupload.service.FileUploadService;
 import lombok.extern.log4j.Log4j2;
